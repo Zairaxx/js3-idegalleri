@@ -1,0 +1,654 @@
+<title>JS3 Idégalleri</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --bg:#F3F4FA; --surface:#FFFFFF; --surface-2:#EAEBF3; --surface-3:#DEE0EC;
+    --text:#15161F; --text-muted:#5A5E72; --text-faint:#8A8DA0; --border:#DADCE8;
+    --accent:#423CD6; --accent-ink:#FFFFFF; --accent-soft:#E7E6FB;
+    --shadow:0 1px 2px rgba(20,20,40,.05), 0 8px 24px -12px rgba(20,20,40,.20);
+    --radius:16px;
+    --font-display:'Instrument Serif','Iowan Old Style',Georgia,serif;
+    --font-body:'Public Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#101018; --surface:#191A24; --surface-2:#22232F; --surface-3:#2C2E3D;
+      --text:#EDEEF6; --text-muted:#A3A6BC; --text-faint:#6F7288; --border:#303244;
+      --accent:#9C97FA; --accent-ink:#15121F; --accent-soft:#2A2750;
+      --shadow:0 1px 2px rgba(0,0,0,.35), 0 14px 30px -14px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#101018; --surface:#191A24; --surface-2:#22232F; --surface-3:#2C2E3D;
+    --text:#EDEEF6; --text-muted:#A3A6BC; --text-faint:#6F7288; --border:#303244;
+    --accent:#9C97FA; --accent-ink:#15121F; --accent-soft:#2A2750;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 14px 30px -14px rgba(0,0,0,.6);
+  }
+
+  *{box-sizing:border-box;}
+  body{background:var(--bg); color:var(--text); font-family:var(--font-body); padding:0 24px; padding-block:56px 40px;}
+  svg.icon{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+  svg.icon.filled{fill:currentColor;stroke:none;}
+  a{color:inherit;}
+
+  .wrap{max-width:1180px;margin:0 auto;}
+
+  /* ---------- home ---------- */
+  .hero{max-width:640px;margin-bottom:48px;}
+  .eyebrow{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint);}
+  .hero h1{font-family:var(--font-display);font-weight:400;font-size:clamp(2.4rem,5vw,3.4rem);line-height:1.05;margin:.3em 0 .4em;text-wrap:balance;}
+  .hero p{color:var(--text-muted);font-size:1.05rem;line-height:1.65;margin:0;}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:30px 26px;}
+
+  .app-card{display:flex;flex-direction:column;gap:14px;text-decoration:none;color:inherit;}
+  .card-frame{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--surface);box-shadow:var(--shadow);transition:transform .16s ease, box-shadow .16s ease;}
+  .app-card:hover .card-frame, .app-card:focus-visible .card-frame{transform:translateY(-3px);box-shadow:0 1px 2px rgba(20,20,40,.05), 0 18px 34px -14px rgba(20,20,40,.32);}
+  .app-card:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:var(--radius);}
+  .frame-bar{display:flex;align-items:center;gap:6px;padding:10px 12px;border-bottom:1px solid var(--border);background:var(--surface-2);}
+  .frame-bar i{width:7px;height:7px;border-radius:50%;background:var(--surface-3);display:block;}
+  .frame-bar .bar-label{margin-left:6px;font-family:var(--font-mono);font-size:.68rem;color:var(--text-faint);}
+  .card-frame-body{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--surface-2);}
+  .mount-wrap{position:absolute;top:0;left:0;transform-origin:top left;pointer-events:none;}
+
+  .card-meta h3{font-family:var(--font-display);font-weight:400;font-size:1.45rem;margin:0 0 .25em;line-height:1.15;}
+  .card-meta h3 .sub{display:block;font-family:var(--font-body);font-size:.86rem;font-weight:600;color:var(--text-faint);text-transform:uppercase;letter-spacing:.04em;margin-top:.2em;}
+  .card-meta p{margin:0;color:var(--text-muted);font-size:.92rem;line-height:1.55;max-width:42ch;}
+  .card-meta .idx{font-family:var(--font-mono);font-size:.7rem;color:var(--text-faint);letter-spacing:.06em;}
+
+  .site-footer{margin-top:64px;text-align:center;font-family:var(--font-mono);font-size:.76rem;color:var(--text-faint);}
+
+  /* ---------- detail ---------- */
+  .detail{margin-top:8px;}
+  .back{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:.8rem;letter-spacing:.02em;text-decoration:none;color:var(--text-muted);margin-bottom:36px;}
+  .back svg{width:15px;height:15px;}
+  .back:hover{color:var(--accent);}
+  .detail-head{max-width:640px;margin-bottom:32px;}
+  .detail-head h2{font-family:var(--font-display);font-weight:400;font-size:clamp(2.1rem,4.4vw,3rem);margin:.25em 0 .35em;text-wrap:balance;}
+  .detail-head p{color:var(--text-muted);font-size:1.05rem;line-height:1.65;margin:0;}
+
+  .stage-frame{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--surface);box-shadow:var(--shadow);width:min(var(--fw,1040px),100%);margin:0 auto;}
+  .stage-mount{overflow-x:auto;}
+  .stage-note{text-align:center;font-family:var(--font-mono);font-size:.74rem;color:var(--text-faint);margin-top:18px;}
+
+  /* ================= mock-app shared ================= */
+  .mock-app{--a:#6D5AE0;--a-soft:#EFEBFF;--a-ink:#fff;--a-deep:#3B2E8C;
+    font-family:var(--font-body);font-size:14px;line-height:1.42;color:#181822;background:#fff;}
+  .mock-app h1,.mock-app h2,.mock-app h3,.mock-app h4,.mock-app h5{margin:0;font-weight:400;}
+  .mk-topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;border-bottom:1px solid #ECECF2;flex-wrap:wrap;}
+  .mk-topbar .grp{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .mk-h{font-family:var(--font-display);font-size:1.35rem;}
+  .mk-eyebrow{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:#9497A8;}
+  .mk-btn{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:8px 16px;font-family:var(--font-body);font-weight:600;font-size:.8rem;border:1.4px solid transparent;white-space:nowrap;}
+  .mk-btn.solid{background:var(--a);color:var(--a-ink);}
+  .mk-btn.outline{background:transparent;border-color:currentColor;color:var(--a);}
+  .mk-btn.ghost{background:#F1F1F6;color:#3A3A46;}
+  .mk-pill{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:4px 10px;font-size:.7rem;font-weight:700;background:var(--a-soft);color:var(--a-deep);white-space:nowrap;}
+  .mk-input{display:flex;align-items:center;gap:8px;border:1px solid #E2E2EA;background:#fff;border-radius:10px;padding:9px 14px;font-size:.82rem;color:#9497A8;min-width:0;}
+  .mk-input svg{width:15px;height:15px;}
+  .mk-avatars{display:flex;}
+  .mk-avatar{width:26px;height:26px;border-radius:50%;background:var(--a);color:var(--a-ink);display:flex;align-items:center;justify-content:center;font-size:.64rem;font-weight:700;border:2px solid #fff;margin-left:-8px;}
+  .mk-avatar:first-child{margin-left:0;}
+  .mk-body{padding:22px;}
+  .mk-muted{color:#9497A8;}
+
+  /* kanban */
+  .mk-board{display:flex;gap:16px;padding:20px;overflow-x:auto;}
+  .mk-col{flex:1 1 220px;min-width:210px;background:#F7F7FB;border-radius:12px;padding:12px;}
+  .mk-col-head{display:flex;align-items:center;justify-content:space-between;margin:0 2px 10px;}
+  .mk-col-head .count{background:#E7E7EF;color:#6A6A78;border-radius:999px;padding:1px 9px;font-size:.7rem;font-weight:700;}
+  .mk-task{background:#fff;border:1px solid #ECECF2;border-radius:10px;padding:12px;margin-bottom:10px;box-shadow:0 1px 2px rgba(20,20,40,.04);}
+  .mk-task .top-row{display:flex;justify-content:space-between;align-items:flex-start;gap:6px;}
+  .mk-task h4{font-size:.86rem;font-weight:600;margin:0 0 8px;font-family:var(--font-body);}
+  .mk-task .grip{opacity:.35;}
+  .mk-task .foot{display:flex;align-items:center;justify-content:space-between;margin-top:10px;}
+  .mk-task .due{display:flex;align-items:center;gap:4px;font-size:.7rem;color:#9497A8;}
+  .mk-task .due svg{width:12px;height:12px;}
+
+  /* recept */
+  .mk-filters{display:flex;gap:8px;padding:16px 22px 0;flex-wrap:wrap;}
+  .mk-recipe-wrap{display:flex;flex-wrap:wrap;}
+  .mk-recipe-list{flex:1 1 300px;padding:16px;display:flex;flex-direction:column;gap:8px;border-right:1px solid #ECECF2;}
+  .mk-recipe-item{display:flex;gap:12px;padding:8px;border-radius:10px;}
+  .mk-recipe-item.active{background:var(--a-soft);}
+  .mk-thumb{width:54px;height:54px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,var(--a),var(--a-deep));}
+  .mk-recipe-item h5{margin:0 0 4px;font-size:.85rem;font-weight:600;}
+  .mk-recipe-meta{display:flex;gap:10px;font-size:.7rem;color:#9497A8;flex-wrap:wrap;}
+  .mk-recipe-meta span{display:flex;align-items:center;gap:3px;}
+  .mk-recipe-detail{flex:1 1 340px;padding:22px;}
+  .mk-hero-img{height:170px;border-radius:14px;background:linear-gradient(135deg,var(--a),var(--a-deep));margin-bottom:16px;}
+  .mk-tag-row{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0;}
+  .mk-step{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;}
+  .mk-step .num{width:22px;height:22px;border-radius:50%;background:var(--a-soft);color:var(--a-deep);font-size:.68rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+  /* budget */
+  .mk-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;padding:20px 22px;}
+  .mk-stat{border:1px solid #ECECF2;border-radius:12px;padding:14px 16px;}
+  .mk-stat .lbl{font-size:.7rem;color:#9497A8;display:flex;align-items:center;gap:5px;margin-bottom:6px;}
+  .mk-stat .lbl svg{width:13px;height:13px;}
+  .mk-stat .val{font-family:var(--font-display);font-size:1.7rem;font-variant-numeric:tabular-nums;}
+  .mk-split{display:flex;gap:0;flex-wrap:wrap;padding:0 22px 22px;}
+  .mk-cat-list{flex:1 1 260px;padding-right:20px;padding-top:6px;}
+  .mk-cat-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .mk-cat-row .name{width:78px;font-size:.76rem;color:#4a4a56;flex-shrink:0;}
+  .mk-bar-track{flex:1;height:7px;background:#F1F1F6;border-radius:99px;overflow:hidden;}
+  .mk-bar-fill{height:100%;background:var(--a);border-radius:99px;}
+  .mk-cat-row .amt{width:56px;text-align:right;font-size:.76rem;font-variant-numeric:tabular-nums;color:#4a4a56;}
+  .mk-tx-list{flex:1 1 260px;border-left:1px solid #ECECF2;padding-left:20px;padding-top:6px;}
+  .mk-tx-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #F4F4F8;}
+  .mk-tx-row:last-child{border-bottom:none;}
+  .mk-tx-icon{width:32px;height:32px;border-radius:9px;background:#F1F1F6;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .mk-tx-icon svg{width:15px;height:15px;}
+  .mk-tx-mid{flex:1;min-width:0;}
+  .mk-tx-name{font-size:.8rem;font-weight:600;}
+  .mk-tx-date{font-size:.68rem;color:#9497A8;}
+  .mk-tx-amt{font-variant-numeric:tabular-nums;font-size:.8rem;font-weight:700;flex-shrink:0;}
+  .mk-tx-amt.pos{color:#1E9E7E;}
+  .mk-tx-amt.neg{color:#D5473C;}
+
+  /* vader */
+  .mock-app.vader{background:linear-gradient(180deg,#2E8FE0,#8FC5F2);color:#fff;}
+  .mk-weather-top{padding:18px 20px 0;}
+  .mk-weather-top .mk-input{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.85);}
+  .mk-weather-main{text-align:center;padding:22px 20px 8px;}
+  .mk-weather-main .city{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.05em;opacity:.85;}
+  .mk-weather-main .temp{font-family:var(--font-display);font-size:4.6rem;line-height:1;margin:6px 0;}
+  .mk-weather-main .cond{font-size:.86rem;opacity:.9;}
+  .mk-weather-stats{display:flex;justify-content:center;gap:22px;padding:14px 0 22px;font-size:.72rem;opacity:.9;}
+  .mk-weather-stats div{text-align:center;}
+  .mk-forecast{display:flex;gap:10px;padding:0 20px 20px;overflow-x:auto;}
+  .mk-forecast .day{background:rgba(255,255,255,.18);border-radius:14px;padding:12px 10px;text-align:center;min-width:54px;font-size:.72rem;flex-shrink:0;}
+  .mk-forecast .day svg{margin:6px 0;}
+  .mk-saved{background:#fff;border-radius:20px 20px 0 0;padding:18px 20px 24px;color:#181822;}
+  .mk-saved .mk-eyebrow{margin-bottom:10px;display:block;}
+  .mk-city-chip{display:inline-flex;align-items:center;gap:6px;background:#F1F1F6;border-radius:999px;padding:6px 12px;font-size:.74rem;margin:0 6px 6px 0;}
+  .mk-city-chip.on{background:var(--a-soft);color:var(--a-deep);font-weight:600;}
+
+  /* ehandel */
+  .mk-shop-nav{background:#1B1420;color:#fff;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .mk-shop-nav .logo{font-family:var(--font-mono);font-weight:600;letter-spacing:.05em;font-size:.86rem;}
+  .mk-shop-nav .mk-input{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.16);color:rgba(255,255,255,.7);}
+  .mk-cart-btn{position:relative;color:#fff;display:flex;}
+  .mk-cart-badge{position:absolute;top:-7px;right:-8px;background:var(--a);color:var(--a-ink);border-radius:50%;width:16px;height:16px;font-size:.58rem;display:flex;align-items:center;justify-content:center;font-weight:700;}
+  .mk-shop-body{display:flex;flex-wrap:wrap;}
+  .mk-shop-grid{flex:2 1 420px;display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:14px;padding:20px;}
+  .mk-product{border:1px solid #ECECF2;border-radius:12px;overflow:hidden;}
+  .mk-product-img{aspect-ratio:1;background:linear-gradient(135deg,var(--a-soft),var(--a));}
+  .mk-product-info{padding:10px 12px;}
+  .mk-product-info .name{font-size:.78rem;font-weight:600;margin-bottom:4px;}
+  .mk-product-info .row{display:flex;justify-content:space-between;align-items:center;}
+  .mk-product-info .price{font-variant-numeric:tabular-nums;font-weight:700;font-size:.8rem;}
+  .mk-shop-cart{flex:1 1 220px;border-left:1px solid #ECECF2;padding:20px;}
+  .mk-cart-item{display:flex;justify-content:space-between;gap:8px;font-size:.78rem;padding:9px 0;border-bottom:1px solid #F4F4F8;}
+  .mk-cart-item .qty{color:#9497A8;}
+  .mk-cart-total{display:flex;justify-content:space-between;padding-top:12px;font-weight:700;font-size:.86rem;font-variant-numeric:tabular-nums;}
+
+  /* quiz */
+  .mk-quiz-top{display:flex;align-items:center;justify-content:space-between;padding:18px 20px 0;}
+  .mk-progress-track{height:6px;background:#F1F1F6;border-radius:99px;margin:14px 20px 0;overflow:hidden;}
+  .mk-progress-fill{height:100%;width:40%;background:var(--a);border-radius:99px;}
+  .mk-quiz-q{padding:26px 22px 6px;font-family:var(--font-display);font-size:1.35rem;line-height:1.35;}
+  .mk-quiz-opts{padding:8px 22px 22px;display:flex;flex-direction:column;gap:10px;}
+  .mk-quiz-opt{border:1.5px solid #ECECF2;border-radius:12px;padding:12px 14px;font-size:.86rem;display:flex;align-items:center;gap:10px;}
+  .mk-quiz-opt .letter{width:22px;height:22px;border-radius:50%;background:#F1F1F6;color:#6A6A78;font-size:.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .mk-quiz-opt.selected{border-color:var(--a);background:var(--a-soft);color:var(--a-deep);font-weight:600;}
+  .mk-quiz-opt.selected .letter{background:var(--a);color:var(--a-ink);}
+  .mk-quiz-foot{padding:2px 22px 24px;}
+
+  /* film */
+  .mock-app.film{background:#14121F;color:#EDEBF7;}
+  .mock-app.film .mk-input{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:rgba(255,255,255,.55);}
+  .mk-film-top{padding:18px 22px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+  .mk-film-top .mk-input{flex:1 1 200px;}
+  .mk-film-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:14px;padding:6px 22px 22px;}
+  .mk-poster{aspect-ratio:2/3;border-radius:10px;position:relative;overflow:hidden;}
+  .mk-poster .rating{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.55);color:#E8B34C;font-size:.64rem;font-weight:700;border-radius:999px;padding:2px 7px;display:flex;align-items:center;gap:3px;}
+  .mk-poster .rating svg{width:10px;height:10px;}
+  .mk-poster .cap{position:absolute;bottom:0;left:0;right:0;padding:8px;background:linear-gradient(0deg,rgba(0,0,0,.8),transparent);font-size:.7rem;font-weight:600;}
+  .mk-featured{margin:6px 22px 22px;display:flex;gap:16px;background:#1E1B2E;border-radius:14px;padding:16px;flex-wrap:wrap;}
+  .mk-featured .backdrop{width:150px;height:96px;border-radius:10px;flex-shrink:0;}
+  .mk-featured .info{flex:1;min-width:180px;}
+  .mk-featured h4{font-family:var(--font-display);font-size:1.1rem;margin-bottom:6px;}
+  .mk-featured .mk-tag-row{margin:8px 0 12px;}
+  .mk-featured .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+
+  /* anteckningar */
+  .mock-app.anteckningar{background:#FBF6EE;color:#2A2118;}
+  .mock-app.anteckningar .mk-input{border-color:#E7DBC1;}
+  .mk-notes-wrap{display:flex;flex-wrap:wrap;}
+  .mk-notes-side{flex:0 0 148px;padding:20px 10px;border-right:1px solid #EFE6D4;}
+  .mk-tag-item{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:8px;font-size:.78rem;margin-bottom:2px;}
+  .mk-tag-item .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+  .mk-tag-item .n{margin-left:auto;color:#9C8C6E;font-size:.7rem;}
+  .mk-tag-item.active{background:#F3E9D6;font-weight:600;}
+  .mk-notes-grid{flex:1 1 340px;padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;align-content:start;}
+  .mk-note{border-radius:12px;padding:14px;position:relative;box-shadow:0 1px 2px rgba(60,40,10,.08);}
+  .mk-note h5{margin:0 0 6px;font-size:.84rem;padding-right:16px;}
+  .mk-note p{margin:0 0 10px;font-size:.74rem;line-height:1.45;color:#5A4C38;}
+  .mk-note .pin{position:absolute;top:12px;right:10px;opacity:.5;}
+  .mk-note .meta{display:flex;justify-content:space-between;align-items:center;font-size:.66rem;color:#8A7B5E;}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><line x1="20" y1="20" x2="15.8" y2="15.8"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><polyline points="12,7 12,12 16,14"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="8,7 17,7 17,16"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><line x1="7" y1="7" x2="17" y2="17"/><polyline points="17,8 17,17 8,17"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 4h2l2.4 12.2a2 2 0 0 0 2 1.6h7.3a2 2 0 0 0 2-1.6L20.5 8H6"/><circle cx="9.5" cy="20" r="1.3"/><circle cx="17.5" cy="20" r="1.3"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M12.6 3H5a2 2 0 0 0-2 2v7.6a2 2 0 0 0 .6 1.4l8.4 8.4a2 2 0 0 0 2.8 0l6-6a2 2 0 0 0 0-2.8L12.6 3Z"/><circle cx="8.2" cy="8.2" r="1.3"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="5,13 10,18 19,7"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></symbol>
+  <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M6 3.5h12v17l-6-4-6 4v-17Z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.7-6.5-10.8A6.5 6.5 0 0 1 12 3.7a6.5 6.5 0 0 1 6.5 6.5C18.5 15.3 12 21 12 21Z"/><circle cx="12" cy="10.2" r="2.2"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><line x1="12" y1="2.5" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="21.5"/><line x1="2.5" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="21.5" y2="12"/><line x1="5" y1="5" x2="6.8" y2="6.8"/><line x1="17.2" y1="17.2" x2="19" y2="19"/><line x1="5" y1="19" x2="6.8" y2="17.2"/><line x1="17.2" y1="6.8" x2="19" y2="5"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18.5a4.3 4.3 0 0 1-.6-8.55 5.4 5.4 0 0 1 10.4-1.7 4 4 0 0 1-.8 9.25Z"/></symbol>
+  <symbol id="i-grip" viewBox="0 0 24 24"><circle cx="9" cy="6" r="1.1"/><circle cx="15" cy="6" r="1.1"/><circle cx="9" cy="12" r="1.1"/><circle cx="15" cy="12" r="1.1"/><circle cx="9" cy="18" r="1.1"/><circle cx="15" cy="18" r="1.1"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><polygon points="12,3.2 14.7,9.2 21.3,9.9 16.4,14.3 17.8,20.8 12,17.4 6.2,20.8 7.6,14.3 2.7,9.9 9.3,9.2"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.2S3.8 15.2 3.8 9.3A4.6 4.6 0 0 1 12 6.4a4.6 4.6 0 0 1 8.2 2.9c0 5.9-8.2 10.9-8.2 10.9Z"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><polygon points="8,5.5 19,12 8,18.5"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="11,6 5,12 11,18"/></symbol>
+</defs>
+</svg>
+
+<div class="wrap">
+
+  <!-- ========== HOME ========== -->
+  <section id="view-home">
+    <header class="hero">
+      <div class="eyebrow">JS3 · Nackademin · Examinerande projektarbete</div>
+      <h1>Åtta idéer att välja mellan</h1>
+      <p>Samma gemensamma krav, olika startpunkter. Korten nedan visar hur respektive app skulle kunna se ut — rena utseendemockups, ingen fungerande kod. Klicka på ett kort för att se hela vyn.</p>
+    </header>
+
+    <div class="grid" id="app-grid">
+
+      <a class="app-card" href="#/kanban">
+        <div class="card-frame"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">sprintboard.app</span></div>
+          <div class="card-frame-body"><div class="mount-wrap" data-mount-for="kanban" style="width:1040px;transform:scale(.308)"></div></div></div>
+        <div class="card-meta"><div class="idx">Idé 01 / 08</div>
+          <h3>Sprintboard<span class="sub">Uppgiftshanterare</span></h3>
+          <p>Kolumner för att göra, pågår och klart — ett kort per uppgift.</p></div>
+      </a>
+
+      <a class="app-card" href="#/recept">
+        <div class="card-frame"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">skafferiet.app</span></div>
+          <div class="card-frame-body"><div class="mount-wrap" data-mount-for="recept" style="width:1000px;transform:scale(.32)"></div></div></div>
+        <div class="card-meta"><div class="idx">Idé 02 / 08</div>
+          <h3>Skafferiet<span class="sub">Recept-app</span></h3>
+          <p>Sök bland recept och se ingredienser och steg i en detaljvy.</p></div>
+      </a>
+
+      <a class="app-card" href="#/budget">
+        <div class="card-frame"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">saldo.app</span></div>
+          <div class="card-frame-body"><div class="mount-wrap" data-mount-for="budget" style="width:900px;transform:scale(.356)"></div></div></div>
+        <div class="card-meta"><div class="idx">Idé 03 / 08</div>
+          <h3>Saldo<span class="sub">Budget­spårare</span></h3>
+          <p>Inkomster, utgifter och saldo per kategori, med transaktionslista.</p></div>
+      </a>
+
+      <a class="app-card" href="#/vader">
+        <div class="card-frame"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">himlenidag.app</span></div>
+          <div class="card-frame-body"><div class="mount-wrap" data-mount-for="vader" style="width:420px;transform:scale(.762)"></div></div></div>
+        <div class="card-meta"><div class="idx">Idé 04 / 08</div>
+          <h3>Himlen idag<span class="sub">Väderapp</span></h3>
+          <p>Sök en stad och se aktuellt väder, prognos och favoritstäder.</p></div>
+      </a>
+
+      <a class="app-card" href="#/ehandel">
+        <div class="card-frame"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">butiken.app</span></div>
+          <div class="card-frame-body"><div class="mount-wrap" data-mount-for="ehandel" style="width:1040px;transform:scale(.308)"></div></div></div>
+        <div class="card-meta"><div class="idx">Idé 05 / 08</div>
+          <h3>Butiken<span class="sub">E-handelskatalog</span></h3>
+          <p>Produktkatalog med filter, produktkort och en varukorg.</p></div>
+      </a>
+
+      <a class="app-card" href="#/quiz">
+        <div class="card-frame"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">quizly.app</span></div>
+          <div class="card-frame-body"><div class="mount-wrap" data-mount-for="quiz" style="width:460px;transform:scale(.696)"></div></div></div>
+        <div class="card-meta"><div class="idx">Idé 06 / 08</div>
+          <h3>Quizly<span class="sub">Quiz / flashcards</span></h3>
+          <p>En fråga i taget, med progress, poäng och tidtagning.</p></div>
+      </a>
+
+      <a class="app-card" href="#/film">
+        <div class="card-frame"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">kvallensfilm.app</span></div>
+          <div class="card-frame-body"><div class="mount-wrap" data-mount-for="film" style="width:1040px;transform:scale(.308)"></div></div></div>
+        <div class="card-meta"><div class="idx">Idé 07 / 08</div>
+          <h3>Kvällens film<span class="sub">Filmdatabas</span></h3>
+          <p>Bläddra bland filmer och spara favoriter till en egen lista.</p></div>
+      </a>
+
+      <a class="app-card" href="#/anteckningar">
+        <div class="card-frame"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">lappen.app</span></div>
+          <div class="card-frame-body"><div class="mount-wrap" data-mount-for="anteckningar" style="width:920px;transform:scale(.348)"></div></div></div>
+        <div class="card-meta"><div class="idx">Idé 08 / 08</div>
+          <h3>Lappen<span class="sub">Anteckningsapp</span></h3>
+          <p>Anteckningar med taggar, sökning och en färgkodad sidopanel.</p></div>
+      </a>
+
+    </div>
+
+    <div class="site-footer">Rena mockups för inspiration inför projektstart — bygg gärna en egen variant.</div>
+  </section>
+
+  <!-- ========== DETAIL VIEWS ========== -->
+  <section class="detail" id="view-kanban" hidden>
+    <a class="back" href="#/"><svg class="icon"><use href="#i-left"/></svg>Alla idéer</a>
+    <div class="detail-head"><div class="eyebrow">Idé 01 av 08</div><h2>Sprintboard</h2>
+      <p>En klassisk kanbantavla med tre kolumner. Bra övning i att dela state mellan kort och kolumner, och i att bygga återanvändbara komponenter.</p></div>
+    <div class="stage-frame" style="--fw:1040px"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">sprintboard.app</span></div>
+      <div class="stage-mount" data-mount-for="kanban"></div></div>
+    <p class="stage-note">Statisk mockup — ingen funktionalitet.</p>
+  </section>
+
+  <section class="detail" id="view-recept" hidden>
+    <a class="back" href="#/"><svg class="icon"><use href="#i-left"/></svg>Alla idéer</a>
+    <div class="detail-head"><div class="eyebrow">Idé 02 av 08</div><h2>Skafferiet</h2>
+      <p>Söklista till vänster, receptdetaljer till höger. Passar bra för att öva routing mellan lista och detaljvy, plus filtrering.</p></div>
+    <div class="stage-frame" style="--fw:1000px"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">skafferiet.app</span></div>
+      <div class="stage-mount" data-mount-for="recept"></div></div>
+    <p class="stage-note">Statisk mockup — ingen funktionalitet.</p>
+  </section>
+
+  <section class="detail" id="view-budget" hidden>
+    <a class="back" href="#/"><svg class="icon"><use href="#i-left"/></svg>Alla idéer</a>
+    <div class="detail-head"><div class="eyebrow">Idé 03 av 08</div><h2>Saldo</h2>
+      <p>Nyckeltal högst upp, kategorifördelning och transaktioner under. Ger övning i formulär, summering och enkel visualisering.</p></div>
+    <div class="stage-frame" style="--fw:900px"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">saldo.app</span></div>
+      <div class="stage-mount" data-mount-for="budget"></div></div>
+    <p class="stage-note">Statisk mockup — ingen funktionalitet.</p>
+  </section>
+
+  <section class="detail" id="view-vader" hidden>
+    <a class="back" href="#/"><svg class="icon"><use href="#i-left"/></svg>Alla idéer</a>
+    <div class="detail-head"><div class="eyebrow">Idé 04 av 08</div><h2>Himlen idag</h2>
+      <p>Mobilanpassad vy byggd kring ett externt väder-API. Bra tillfälle att öva loading- och felhantering vid nätverksanrop.</p></div>
+    <div class="stage-frame" style="--fw:420px"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">himlenidag.app</span></div>
+      <div class="stage-mount" data-mount-for="vader"></div></div>
+    <p class="stage-note">Statisk mockup — ingen funktionalitet.</p>
+  </section>
+
+  <section class="detail" id="view-ehandel" hidden>
+    <a class="back" href="#/"><svg class="icon"><use href="#i-left"/></svg>Alla idéer</a>
+    <div class="detail-head"><div class="eyebrow">Idé 05 av 08</div><h2>Butiken</h2>
+      <p>Produktrutnät till vänster, varukorg till höger. Övar state som delas mellan flera komponenter och beräkningar i realtid.</p></div>
+    <div class="stage-frame" style="--fw:1040px"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">butiken.app</span></div>
+      <div class="stage-mount" data-mount-for="ehandel"></div></div>
+    <p class="stage-note">Statisk mockup — ingen funktionalitet.</p>
+  </section>
+
+  <section class="detail" id="view-quiz" hidden>
+    <a class="back" href="#/"><svg class="icon"><use href="#i-left"/></svg>Alla idéer</a>
+    <div class="detail-head"><div class="eyebrow">Idé 06 av 08</div><h2>Quizly</h2>
+      <p>En fråga i taget med progress och poängräkning. Passar för den som vill fokusera mer på logik och state än på ett komplext gränssnitt.</p></div>
+    <div class="stage-frame" style="--fw:460px"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">quizly.app</span></div>
+      <div class="stage-mount" data-mount-for="quiz"></div></div>
+    <p class="stage-note">Statisk mockup — ingen funktionalitet.</p>
+  </section>
+
+  <section class="detail" id="view-film" hidden>
+    <a class="back" href="#/"><svg class="icon"><use href="#i-left"/></svg>Alla idéer</a>
+    <div class="detail-head"><div class="eyebrow">Idé 07 av 08</div><h2>Kvällens film</h2>
+      <p>Rutnät av filmer med en utvald titel i fokus. Ger övning i att kombinera data från ett externt API med en egen sparad lista.</p></div>
+    <div class="stage-frame" style="--fw:1040px"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">kvallensfilm.app</span></div>
+      <div class="stage-mount" data-mount-for="film"></div></div>
+    <p class="stage-note">Statisk mockup — ingen funktionalitet.</p>
+  </section>
+
+  <section class="detail" id="view-anteckningar" hidden>
+    <a class="back" href="#/"><svg class="icon"><use href="#i-left"/></svg>Alla idéer</a>
+    <div class="detail-head"><div class="eyebrow">Idé 08 av 08</div><h2>Lappen</h2>
+      <p>Enkel att komma igång med, men täcker ändå CRUD, sökfiltrering och persistens — ett tryggt val om man vill hålla gränssnittet enkelt.</p></div>
+    <div class="stage-frame" style="--fw:920px"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">lappen.app</span></div>
+      <div class="stage-mount" data-mount-for="anteckningar"></div></div>
+    <p class="stage-note">Statisk mockup — ingen funktionalitet.</p>
+  </section>
+
+</div>
+
+<!-- ========== TEMPLATES (mockup markup, cloned into cards + stages) ========== -->
+
+<template id="tpl-kanban">
+<div class="mock-app" style="--a:#6D5AE0;--a-soft:#EFEBFF;--a-ink:#fff;--a-deep:#3B2E8C">
+  <div class="mk-topbar">
+    <div class="grp"><span class="mk-h">Sprintboard</span><span class="mk-pill">Vecka 3</span></div>
+    <div class="grp"><div class="mk-input"><svg class="icon"><use href="#i-search"/></svg>Sök uppgift…</div>
+      <div class="mk-avatars"><div class="mk-avatar">EL</div><div class="mk-avatar">MJ</div><div class="mk-avatar">AK</div></div>
+      <button class="mk-btn solid"><svg class="icon" style="stroke:#fff"><use href="#i-plus"/></svg>Nytt kort</button></div>
+  </div>
+  <div class="mk-board">
+    <div class="mk-col"><div class="mk-col-head"><span class="mk-h" style="font-size:1rem">Att göra</span><span class="count">3</span></div>
+      <div class="mk-task"><div class="top-row"><h4>Sätt upp routing för produktsidan</h4><svg class="icon grip"><use href="#i-grip"/></svg></div>
+        <span class="mk-pill" style="background:#FDE7E7;color:#B23A3A">Bugg</span>
+        <div class="foot"><div class="mk-avatar">EL</div><div class="due"><svg class="icon"><use href="#i-clock"/></svg>12 sep</div></div></div>
+      <div class="mk-task"><div class="top-row"><h4>Designa kortkomponent</h4><svg class="icon grip"><use href="#i-grip"/></svg></div>
+        <span class="mk-pill">Frontend</span>
+        <div class="foot"><div class="mk-avatar">MJ</div><div class="due"><svg class="icon"><use href="#i-clock"/></svg>14 sep</div></div></div>
+      <div class="mk-task"><div class="top-row"><h4>Skriv README för repo</h4><svg class="icon grip"><use href="#i-grip"/></svg></div>
+        <span class="mk-pill" style="background:#F1F1F6;color:#6A6A78">Dokumentation</span>
+        <div class="foot"><div class="mk-avatar">AK</div><div class="due"><svg class="icon"><use href="#i-clock"/></svg>16 sep</div></div></div>
+    </div>
+    <div class="mk-col"><div class="mk-col-head"><span class="mk-h" style="font-size:1rem">Pågår</span><span class="count">2</span></div>
+      <div class="mk-task"><div class="top-row"><h4>Koppla state mellan kolumner</h4><svg class="icon grip"><use href="#i-grip"/></svg></div>
+        <span class="mk-pill" style="background:#FFF3D6;color:#8C5E0C">Hög prioritet</span>
+        <div class="foot"><div class="mk-avatar">EL</div><div class="due"><svg class="icon"><use href="#i-clock"/></svg>11 sep</div></div></div>
+      <div class="mk-task"><div class="top-row"><h4>Formulär för nytt kort</h4><svg class="icon grip"><use href="#i-grip"/></svg></div>
+        <span class="mk-pill">Frontend</span>
+        <div class="foot"><div class="mk-avatar">MJ</div><div class="due"><svg class="icon"><use href="#i-clock"/></svg>13 sep</div></div></div>
+    </div>
+    <div class="mk-col"><div class="mk-col-head"><span class="mk-h" style="font-size:1rem">Klart</span><span class="count">3</span></div>
+      <div class="mk-task"><div class="top-row"><h4>Grundlayout &amp; navigation</h4><svg class="icon grip"><use href="#i-grip"/></svg></div>
+        <span class="mk-pill" style="background:#E4F6EC;color:#1E7A4C">Klar</span>
+        <div class="foot"><div class="mk-avatar">AK</div><div class="due"><svg class="icon"><use href="#i-clock"/></svg>8 sep</div></div></div>
+      <div class="mk-task"><div class="top-row"><h4>Sätt upp projektet</h4><svg class="icon grip"><use href="#i-grip"/></svg></div>
+        <span class="mk-pill" style="background:#E4F6EC;color:#1E7A4C">Klar</span>
+        <div class="foot"><div class="mk-avatar">EL</div><div class="due"><svg class="icon"><use href="#i-clock"/></svg>5 sep</div></div></div>
+      <div class="mk-task"><div class="top-row"><h4>Wireframes i Figma</h4><svg class="icon grip"><use href="#i-grip"/></svg></div>
+        <span class="mk-pill" style="background:#E4F6EC;color:#1E7A4C">Klar</span>
+        <div class="foot"><div class="mk-avatar">MJ</div><div class="due"><svg class="icon"><use href="#i-clock"/></svg>3 sep</div></div></div>
+    </div>
+  </div>
+</div>
+</template>
+
+<template id="tpl-recept">
+<div class="mock-app" style="--a:#D9642F;--a-soft:#FBE7DB;--a-ink:#fff;--a-deep:#7A3410">
+  <div class="mk-topbar"><span class="mk-h">Skafferiet</span>
+    <div class="mk-input" style="flex:1;max-width:280px"><svg class="icon"><use href="#i-search"/></svg>Sök recept…</div></div>
+  <div class="mk-filters"><span class="mk-pill" style="background:var(--a);color:#fff">Alla</span><span class="mk-pill">Vegetariskt</span><span class="mk-pill">Under 30 min</span><span class="mk-pill">Efterrätt</span></div>
+  <div class="mk-recipe-wrap">
+    <div class="mk-recipe-list">
+      <div class="mk-recipe-item active"><div class="mk-thumb"></div><div><h5>Krämig svamprisotto</h5>
+        <div class="mk-recipe-meta"><span><svg class="icon"><use href="#i-clock"/></svg>35 min</span><span><svg class="icon filled" style="color:#E0A72B"><use href="#i-star"/></svg>4,8</span></div></div></div>
+      <div class="mk-recipe-item"><div class="mk-thumb"></div><div><h5>Het linssoppa</h5>
+        <div class="mk-recipe-meta"><span><svg class="icon"><use href="#i-clock"/></svg>25 min</span><span><svg class="icon filled" style="color:#E0A72B"><use href="#i-star"/></svg>4,6</span></div></div></div>
+      <div class="mk-recipe-item"><div class="mk-thumb"></div><div><h5>Ugnsbakad lax med citron</h5>
+        <div class="mk-recipe-meta"><span><svg class="icon"><use href="#i-clock"/></svg>30 min</span><span><svg class="icon filled" style="color:#E0A72B"><use href="#i-star"/></svg>4,9</span></div></div></div>
+      <div class="mk-recipe-item"><div class="mk-thumb"></div><div><h5>Choklad­mousse</h5>
+        <div class="mk-recipe-meta"><span><svg class="icon"><use href="#i-clock"/></svg>15 min</span><span><svg class="icon filled" style="color:#E0A72B"><use href="#i-star"/></svg>4,7</span></div></div></div>
+    </div>
+    <div class="mk-recipe-detail">
+      <div class="mk-hero-img"></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+        <h3 class="mk-h" style="font-size:1.5rem">Krämig svamprisotto</h3>
+        <svg class="icon" style="color:var(--a);width:20px;height:20px"><use href="#i-heart"/></svg>
+      </div>
+      <div class="mk-tag-row"><span class="mk-pill"><svg class="icon" style="width:11px;height:11px"><use href="#i-clock"/></svg>35 min</span><span class="mk-pill">4 portioner</span><span class="mk-pill">Medel</span></div>
+      <div class="mk-eyebrow" style="margin:14px 0 8px">Så gör du</div>
+      <div class="mk-step"><span class="num">1</span><span>Fräs lök och svamp mjukt i smör.</span></div>
+      <div class="mk-step"><span class="num">2</span><span>Tillsätt ris och rör tills det blir blankt.</span></div>
+      <div class="mk-step"><span class="num">3</span><span>Häll i buljong lite i taget under omrörning.</span></div>
+    </div>
+  </div>
+</div>
+</template>
+
+<template id="tpl-budget">
+<div class="mock-app" style="--a:#1E9E7E;--a-soft:#DEF5EE;--a-ink:#fff;--a-deep:#0F5E49">
+  <div class="mk-topbar"><span class="mk-h">Saldo</span><span class="mk-pill">September</span></div>
+  <div class="mk-stats">
+    <div class="mk-stat"><div class="lbl"><svg class="icon"><use href="#i-up"/></svg>Inkomster</div><div class="val">28 400</div></div>
+    <div class="mk-stat"><div class="lbl"><svg class="icon"><use href="#i-down"/></svg>Utgifter</div><div class="val">19 120</div></div>
+    <div class="mk-stat"><div class="lbl"><svg class="icon"><use href="#i-tag"/></svg>Saldo</div><div class="val" style="color:var(--a-deep)">9 280</div></div>
+  </div>
+  <div class="mk-split">
+    <div class="mk-cat-list">
+      <div class="mk-eyebrow" style="margin-bottom:10px;display:block">Utgifter per kategori</div>
+      <div class="mk-cat-row"><span class="name">Boende</span><div class="mk-bar-track"><div class="mk-bar-fill" style="width:70%"></div></div><span class="amt">8 900</span></div>
+      <div class="mk-cat-row"><span class="name">Mat</span><div class="mk-bar-track"><div class="mk-bar-fill" style="width:42%"></div></div><span class="amt">3 640</span></div>
+      <div class="mk-cat-row"><span class="name">Transport</span><div class="mk-bar-track"><div class="mk-bar-fill" style="width:24%"></div></div><span class="amt">1 480</span></div>
+      <div class="mk-cat-row"><span class="name">Nöje</span><div class="mk-bar-track"><div class="mk-bar-fill" style="width:31%"></div></div><span class="amt">2 100</span></div>
+    </div>
+    <div class="mk-tx-list">
+      <div class="mk-eyebrow" style="margin-bottom:10px;display:block">Senaste transaktioner</div>
+      <div class="mk-tx-row"><div class="mk-tx-icon"><svg class="icon" style="color:#8A8DA0"><use href="#i-tag"/></svg></div>
+        <div class="mk-tx-mid"><div class="mk-tx-name">Hyra</div><div class="mk-tx-date">1 sep</div></div><div class="mk-tx-amt neg">-8 900</div></div>
+      <div class="mk-tx-row"><div class="mk-tx-icon"><svg class="icon" style="color:#8A8DA0"><use href="#i-cart"/></svg></div>
+        <div class="mk-tx-mid"><div class="mk-tx-name">Ica Maxi</div><div class="mk-tx-date">4 sep</div></div><div class="mk-tx-amt neg">-612</div></div>
+      <div class="mk-tx-row"><div class="mk-tx-icon"><svg class="icon" style="color:#1E9E7E"><use href="#i-up"/></svg></div>
+        <div class="mk-tx-mid"><div class="mk-tx-name">Lön</div><div class="mk-tx-date">25 aug</div></div><div class="mk-tx-amt pos">+28 400</div></div>
+      <div class="mk-tx-row"><div class="mk-tx-icon"><svg class="icon" style="color:#8A8DA0"><use href="#i-tag"/></svg></div>
+        <div class="mk-tx-mid"><div class="mk-tx-name">SL-kort</div><div class="mk-tx-date">2 sep</div></div><div class="mk-tx-amt neg">-990</div></div>
+    </div>
+  </div>
+</div>
+</template>
+
+<template id="tpl-vader">
+<div class="mock-app vader" style="--a:#2E8FE0;--a-soft:#E4F2FE;--a-ink:#fff;--a-deep:#1B5FA8">
+  <div class="mk-weather-top"><div class="mk-input"><svg class="icon"><use href="#i-search"/></svg>Sök stad…</div></div>
+  <div class="mk-weather-main">
+    <div class="city">STOCKHOLM</div>
+    <svg class="icon" style="width:64px;height:64px;stroke-width:1.2;margin-top:6px"><use href="#i-cloud"/></svg>
+    <div class="temp">14°</div><div class="cond">Molnigt med sol</div>
+  </div>
+  <div class="mk-weather-stats"><div>Vind<br><b>4 m/s</b></div><div>Luftfuktighet<br><b>62 %</b></div><div>Känns som<br><b>12°</b></div></div>
+  <div class="mk-forecast">
+    <div class="day">Tors<svg class="icon" style="width:20px;height:20px"><use href="#i-sun"/></svg>16°/9°</div>
+    <div class="day">Fre<svg class="icon" style="width:20px;height:20px"><use href="#i-cloud"/></svg>14°/8°</div>
+    <div class="day">Lör<svg class="icon" style="width:20px;height:20px"><use href="#i-cloud"/></svg>13°/7°</div>
+    <div class="day">Sön<svg class="icon" style="width:20px;height:20px"><use href="#i-sun"/></svg>15°/8°</div>
+    <div class="day">Mån<svg class="icon" style="width:20px;height:20px"><use href="#i-cloud"/></svg>12°/6°</div>
+  </div>
+  <div class="mk-saved"><span class="mk-eyebrow">Sparade städer</span>
+    <span class="mk-city-chip on">Stockholm</span><span class="mk-city-chip">Göteborg</span><span class="mk-city-chip">Malmö</span>
+    <span class="mk-city-chip"><svg class="icon" style="width:12px;height:12px"><use href="#i-plus"/></svg>Lägg till</span></div>
+</div>
+</template>
+
+<template id="tpl-ehandel">
+<div class="mock-app" style="--a:#C23B6B;--a-soft:#FBE7EE;--a-ink:#fff;--a-deep:#7A1F44">
+  <div class="mk-shop-nav"><span class="logo">STUDIO/</span>
+    <div class="mk-input" style="flex:1;max-width:300px"><svg class="icon"><use href="#i-search"/></svg>Sök produkter…</div>
+    <div class="mk-cart-btn"><svg class="icon"><use href="#i-cart"/></svg><span class="mk-cart-badge">2</span></div></div>
+  <div class="mk-filters" style="padding-top:16px"><span class="mk-pill" style="background:var(--a);color:#fff">Alla</span><span class="mk-pill">Jackor</span><span class="mk-pill">Skor</span><span class="mk-pill">Accessoarer</span></div>
+  <div class="mk-shop-body">
+    <div class="mk-shop-grid">
+      <div class="mk-product"><div class="mk-product-img"></div><div class="mk-product-info"><div class="name">Fältjacka, olivgrön</div><div class="row"><span class="price">899 kr</span><svg class="icon" style="color:var(--a)"><use href="#i-plus"/></svg></div></div></div>
+      <div class="mk-product"><div class="mk-product-img"></div><div class="mk-product-info"><div class="name">Canvas-sneakers</div><div class="row"><span class="price">649 kr</span><svg class="icon" style="color:var(--a)"><use href="#i-plus"/></svg></div></div></div>
+      <div class="mk-product"><div class="mk-product-img"></div><div class="mk-product-info"><div class="name">Ribbstickad mössa</div><div class="row"><span class="price">249 kr</span><svg class="icon" style="color:var(--a)"><use href="#i-plus"/></svg></div></div></div>
+      <div class="mk-product"><div class="mk-product-img"></div><div class="mk-product-info"><div class="name">Lädergördel</div><div class="row"><span class="price">399 kr</span><svg class="icon" style="color:var(--a)"><use href="#i-plus"/></svg></div></div></div>
+      <div class="mk-product"><div class="mk-product-img"></div><div class="mk-product-info"><div class="name">Ullkofta, grå</div><div class="row"><span class="price">1 099 kr</span><svg class="icon" style="color:var(--a)"><use href="#i-plus"/></svg></div></div></div>
+      <div class="mk-product"><div class="mk-product-img"></div><div class="mk-product-info"><div class="name">Canvas-tote</div><div class="row"><span class="price">299 kr</span><svg class="icon" style="color:var(--a)"><use href="#i-plus"/></svg></div></div></div>
+    </div>
+    <div class="mk-shop-cart">
+      <div class="mk-eyebrow" style="margin-bottom:10px;display:block">Varukorg</div>
+      <div class="mk-cart-item"><span>Fältjacka, olivgrön <span class="qty">× 1</span></span><span>899 kr</span></div>
+      <div class="mk-cart-item"><span>Canvas-sneakers <span class="qty">× 1</span></span><span>649 kr</span></div>
+      <div class="mk-cart-total"><span>Totalt</span><span>1 548 kr</span></div>
+      <button class="mk-btn solid" style="width:100%;justify-content:center;margin-top:14px">Till kassan</button>
+    </div>
+  </div>
+</div>
+</template>
+
+<template id="tpl-quiz">
+<div class="mock-app quiz" style="--a:#D99A1B;--a-soft:#FFF3DC;--a-ink:#fff;--a-deep:#8C5E0C">
+  <div class="mk-quiz-top"><span class="mk-eyebrow">Fråga 4 av 10</span>
+    <div class="grp" style="display:flex;align-items:center;gap:10px"><span style="display:flex;align-items:center;gap:4px;font-size:.76rem;color:#9497A8"><svg class="icon" style="width:13px;height:13px"><use href="#i-clock"/></svg>00:45</span><span class="mk-pill">Poäng: 30</span></div></div>
+  <div class="mk-progress-track"><div class="mk-progress-fill"></div></div>
+  <div class="mk-quiz-q">Vilken metod används för att uppdatera state i en React-komponent?</div>
+  <div class="mk-quiz-opts">
+    <div class="mk-quiz-opt"><span class="letter">A</span>this.state = ...</div>
+    <div class="mk-quiz-opt selected"><span class="letter">B</span>useState / setState()</div>
+    <div class="mk-quiz-opt"><span class="letter">C</span>props.update()</div>
+    <div class="mk-quiz-opt"><span class="letter">D</span>document.querySelector()</div>
+  </div>
+  <div class="mk-quiz-foot"><button class="mk-btn solid" style="width:100%;justify-content:center">Nästa fråga</button></div>
+</div>
+</template>
+
+<template id="tpl-film">
+<div class="mock-app film" style="--a:#E8B34C;--a-soft:#3A2F17;--a-ink:#14121F;--a-deep:#E8B34C">
+  <div class="mk-film-top"><span class="mk-h">Kvällens film</span>
+    <div class="mk-input"><svg class="icon"><use href="#i-search"/></svg>Sök film…</div>
+    <span class="mk-pill" style="background:var(--a);color:#14121F">Alla</span><span class="mk-pill" style="background:rgba(255,255,255,.08);color:#EDEBF7">Min lista</span></div>
+  <div class="mk-film-grid">
+    <div class="mk-poster" style="background:linear-gradient(160deg,#4A3F86,#1E1B33)"><span class="rating"><svg class="icon filled"><use href="#i-star"/></svg>8,4</span><span class="cap">Nattflykt</span></div>
+    <div class="mk-poster" style="background:linear-gradient(160deg,#B45A3A,#3A2317)"><span class="rating"><svg class="icon filled"><use href="#i-star"/></svg>7,9</span><span class="cap">Öknens eko</span></div>
+    <div class="mk-poster" style="background:linear-gradient(160deg,#2E7D6B,#122420)"><span class="rating"><svg class="icon filled"><use href="#i-star"/></svg>8,9</span><span class="cap">Tystnadens hav</span></div>
+    <div class="mk-poster" style="background:linear-gradient(160deg,#7A3B7A,#241224)"><span class="rating"><svg class="icon filled"><use href="#i-star"/></svg>7,2</span><span class="cap">Kortslutning</span></div>
+    <div class="mk-poster" style="background:linear-gradient(160deg,#3A5C8C,#121C2E)"><span class="rating"><svg class="icon filled"><use href="#i-star"/></svg>8,1</span><span class="cap">Vinterljus</span></div>
+  </div>
+  <div class="mk-featured"><div class="backdrop" style="background:linear-gradient(160deg,#4A3F86,#1E1B33)"></div>
+    <div class="info"><h4>Nattflykt</h4>
+      <div class="mk-tag-row"><span class="mk-pill" style="background:rgba(255,255,255,.08);color:#EDEBF7">Drama</span><span class="mk-pill" style="background:rgba(255,255,255,.08);color:#EDEBF7">Thriller</span><span class="mk-pill" style="background:var(--a);color:#14121F">2024</span></div>
+      <div class="row"><button class="mk-btn" style="background:var(--a);color:#14121F;font-weight:700"><svg class="icon" style="stroke:#14121F;width:14px;height:14px"><use href="#i-play"/></svg>Se trailer</button>
+        <button class="mk-btn outline" style="border-color:rgba(255,255,255,.35);color:#EDEBF7"><svg class="icon" style="width:14px;height:14px"><use href="#i-bookmark"/></svg>Lägg till i lista</button></div></div>
+  </div>
+</div>
+</template>
+
+<template id="tpl-anteckningar">
+<div class="mock-app anteckningar" style="--a:#E2634B;--a-soft:#FBE3DC;--a-ink:#fff;--a-deep:#8C3420">
+  <div class="mk-topbar" style="border-color:#EFE6D4"><span class="mk-h">Lappen</span>
+    <div class="mk-input" style="flex:1;max-width:260px"><svg class="icon"><use href="#i-search"/></svg>Sök anteckningar…</div>
+    <button class="mk-btn solid"><svg class="icon" style="stroke:#fff"><use href="#i-plus"/></svg>Ny lapp</button></div>
+  <div class="mk-notes-wrap">
+    <div class="mk-notes-side">
+      <div class="mk-tag-item active"><span class="dot" style="background:#2A2118"></span>Alla<span class="n">12</span></div>
+      <div class="mk-tag-item"><span class="dot" style="background:#E2634B"></span>Idéer<span class="n">4</span></div>
+      <div class="mk-tag-item"><span class="dot" style="background:#5B8C6B"></span>Jobb<span class="n">5</span></div>
+      <div class="mk-tag-item"><span class="dot" style="background:#4C7CA6"></span>Privat<span class="n">3</span></div>
+    </div>
+    <div class="mk-notes-grid">
+      <div class="mk-note" style="background:#FCE8A8"><svg class="icon pin" style="color:#8C6B14"><use href="#i-pin"/></svg><h5>Idé: projektnamn</h5><p>Kanske "Lappen" eller "Klisterlapp" — kort och lätt att komma ihåg.</p><div class="meta"><span>Idéer</span><span>2 sep</span></div></div>
+      <div class="mk-note" style="background:#C9E9D9"><h5>Deploy-checklista</h5><p>Bygg, testa, pusha till main, kontrollera att preview funkar.</p><div class="meta"><span>Jobb</span><span>4 sep</span></div></div>
+      <div class="mk-note" style="background:#CFE3F7"><h5>Boka tandläkare</h5><p>Ring innan kl 12 på vardagar, be om tid nästa vecka.</p><div class="meta"><span>Privat</span><span>1 sep</span></div></div>
+      <div class="mk-note" style="background:#F6D9E4"><h5>Läslista</h5><p>Två böcker kvar innan terminen börjar — prioritera den kortaste.</p><div class="meta"><span>Privat</span><span>29 aug</span></div></div>
+      <div class="mk-note" style="background:#FCE8A8"><h5>Föreläsning: state</h5><p>Gå igenom useState/useReducer med exempel innan lektion 3.</p><div class="meta"><span>Jobb</span><span>3 sep</span></div></div>
+      <div class="mk-note" style="background:#C9E9D9"><h5>Färgpalett, mockups</h5><p>En accent per app, samma gråskala och typsnitt rakt igenom.</p><div class="meta"><span>Idéer</span><span>5 sep</span></div></div>
+    </div>
+  </div>
+</div>
+</template>
+
+<script>
+(function(){
+  var apps = ["kanban","recept","budget","vader","ehandel","quiz","film","anteckningar"];
+  apps.forEach(function(id){
+    var tpl = document.getElementById("tpl-" + id);
+    if(!tpl) return;
+    document.querySelectorAll('[data-mount-for="' + id + '"]').forEach(function(el){
+      el.appendChild(tpl.content.cloneNode(true));
+    });
+  });
+
+  var home = document.getElementById("view-home");
+  function route(){
+    var hash = location.hash.replace(/^#\/?/, "").trim();
+    var match = apps.indexOf(hash) !== -1 ? hash : null;
+    home.hidden = !!match;
+    apps.forEach(function(id){
+      var sec = document.getElementById("view-" + id);
+      if(sec) sec.hidden = (id !== match);
+    });
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener("hashchange", route);
+  route();
+})();
+</script>
