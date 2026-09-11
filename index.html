@@ -56,6 +56,16 @@
   .card-meta h3 .sub{display:block;font-family:var(--font-body);font-size:.86rem;font-weight:600;color:var(--text-faint);text-transform:uppercase;letter-spacing:.04em;margin-top:.2em;}
   .card-meta p{margin:0;color:var(--text-muted);font-size:.92rem;line-height:1.55;max-width:42ch;}
   .card-meta .idx{font-family:var(--font-mono);font-size:.7rem;color:var(--text-faint);letter-spacing:.06em;}
+  .api-tip{display:inline-flex;align-items:center;gap:5px;font-family:var(--font-mono);font-size:.72rem;color:var(--text-faint);margin-top:10px;}
+  .api-tip svg{width:11px;height:11px;}
+
+  .api-block{border:1px solid var(--border);background:var(--surface);border-radius:12px;padding:16px 20px 18px;margin:-4px 0 28px;max-width:640px;}
+  .api-block .eyebrow{display:block;margin-bottom:8px;}
+  .api-block p{margin:0 0 10px;color:var(--text-muted);font-size:.92rem;line-height:1.55;}
+  .api-block p strong{color:var(--text);font-weight:700;}
+  .api-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:.8rem;color:var(--accent);text-decoration:none;}
+  .api-link svg{width:13px;height:13px;}
+  .api-link:hover{text-decoration:underline;}
 
   .site-footer{margin-top:64px;text-align:center;font-family:var(--font-mono);font-size:.76rem;color:var(--text-faint);}
 
@@ -270,7 +280,8 @@
           <div class="card-frame-body"><div class="mount-wrap" data-mount-for="kanban" style="width:1040px;transform:scale(.308)"></div></div></div>
         <div class="card-meta"><div class="idx">Idé 01 / 08</div>
           <h3>Sprintboard<span class="sub">Uppgiftshanterare</span></h3>
-          <p>Kolumner för att göra, pågår och klart — ett kort per uppgift.</p></div>
+          <p>Kolumner för att göra, pågår och klart — ett kort per uppgift.</p>
+          <span class="api-tip"><svg class="icon"><use href="#i-tag"/></svg>API: GitHub REST API</span></div>
       </a>
 
       <a class="app-card" href="#/recept">
@@ -278,7 +289,8 @@
           <div class="card-frame-body"><div class="mount-wrap" data-mount-for="recept" style="width:1000px;transform:scale(.32)"></div></div></div>
         <div class="card-meta"><div class="idx">Idé 02 / 08</div>
           <h3>Skafferiet<span class="sub">Recept-app</span></h3>
-          <p>Sök bland recept och se ingredienser och steg i en detaljvy.</p></div>
+          <p>Sök bland recept och se ingredienser och steg i en detaljvy.</p>
+          <span class="api-tip"><svg class="icon"><use href="#i-tag"/></svg>API: TheMealDB</span></div>
       </a>
 
       <a class="app-card" href="#/budget">
@@ -286,7 +298,8 @@
           <div class="card-frame-body"><div class="mount-wrap" data-mount-for="budget" style="width:900px;transform:scale(.356)"></div></div></div>
         <div class="card-meta"><div class="idx">Idé 03 / 08</div>
           <h3>Saldo<span class="sub">Budget­spårare</span></h3>
-          <p>Inkomster, utgifter och saldo per kategori, med transaktionslista.</p></div>
+          <p>Inkomster, utgifter och saldo per kategori, med transaktionslista.</p>
+          <span class="api-tip"><svg class="icon"><use href="#i-tag"/></svg>API: Frankfurter (valutakurser)</span></div>
       </a>
 
       <a class="app-card" href="#/vader">
@@ -294,7 +307,8 @@
           <div class="card-frame-body"><div class="mount-wrap" data-mount-for="vader" style="width:420px;transform:scale(.762)"></div></div></div>
         <div class="card-meta"><div class="idx">Idé 04 / 08</div>
           <h3>Himlen idag<span class="sub">Väderapp</span></h3>
-          <p>Sök en stad och se aktuellt väder, prognos och favoritstäder.</p></div>
+          <p>Sök en stad och se aktuellt väder, prognos och favoritstäder.</p>
+          <span class="api-tip"><svg class="icon"><use href="#i-tag"/></svg>API: Open-Meteo</span></div>
       </a>
 
       <a class="app-card" href="#/ehandel">
@@ -302,7 +316,8 @@
           <div class="card-frame-body"><div class="mount-wrap" data-mount-for="ehandel" style="width:1040px;transform:scale(.308)"></div></div></div>
         <div class="card-meta"><div class="idx">Idé 05 / 08</div>
           <h3>Butiken<span class="sub">E-handelskatalog</span></h3>
-          <p>Produktkatalog med filter, produktkort och en varukorg.</p></div>
+          <p>Produktkatalog med filter, produktkort och en varukorg.</p>
+          <span class="api-tip"><svg class="icon"><use href="#i-tag"/></svg>API: Fake Store API</span></div>
       </a>
 
       <a class="app-card" href="#/quiz">
@@ -310,7 +325,8 @@
           <div class="card-frame-body"><div class="mount-wrap" data-mount-for="quiz" style="width:460px;transform:scale(.696)"></div></div></div>
         <div class="card-meta"><div class="idx">Idé 06 / 08</div>
           <h3>Quizly<span class="sub">Quiz / flashcards</span></h3>
-          <p>En fråga i taget, med progress, poäng och tidtagning.</p></div>
+          <p>En fråga i taget, med progress, poäng och tidtagning.</p>
+          <span class="api-tip"><svg class="icon"><use href="#i-tag"/></svg>API: Open Trivia Database</span></div>
       </a>
 
       <a class="app-card" href="#/film">
@@ -318,7 +334,8 @@
           <div class="card-frame-body"><div class="mount-wrap" data-mount-for="film" style="width:1040px;transform:scale(.308)"></div></div></div>
         <div class="card-meta"><div class="idx">Idé 07 / 08</div>
           <h3>Kvällens film<span class="sub">Filmdatabas</span></h3>
-          <p>Bläddra bland filmer och spara favoriter till en egen lista.</p></div>
+          <p>Bläddra bland filmer och spara favoriter till en egen lista.</p>
+          <span class="api-tip"><svg class="icon"><use href="#i-tag"/></svg>API: TMDb</span></div>
       </a>
 
       <a class="app-card" href="#/anteckningar">
@@ -326,7 +343,8 @@
           <div class="card-frame-body"><div class="mount-wrap" data-mount-for="anteckningar" style="width:920px;transform:scale(.348)"></div></div></div>
         <div class="card-meta"><div class="idx">Idé 08 / 08</div>
           <h3>Lappen<span class="sub">Anteckningsapp</span></h3>
-          <p>Anteckningar med taggar, sökning och en färgkodad sidopanel.</p></div>
+          <p>Anteckningar med taggar, sökning och en färgkodad sidopanel.</p>
+          <span class="api-tip"><svg class="icon"><use href="#i-tag"/></svg>API: ZenQuotes</span></div>
       </a>
 
     </div>
@@ -339,6 +357,9 @@
     <a class="back" href="#/"><svg class="icon"><use href="#i-left"/></svg>Alla idéer</a>
     <div class="detail-head"><div class="eyebrow">Idé 01 av 08</div><h2>Sprintboard</h2>
       <p>En klassisk kanbantavla med tre kolumner. Bra övning i att dela state mellan kort och kolumner, och i att bygga återanvändbara komponenter.</p></div>
+    <div class="api-block"><span class="eyebrow">API att använda</span>
+      <p><strong>GitHub REST API</strong> — hämta issues från ett publikt GitHub-repo och visa dem som kort på tavlan.</p>
+      <a class="api-link" href="https://docs.github.com/en/rest/issues/issues" target="_blank" rel="noopener">Öppna dokumentationen<svg class="icon"><use href="#i-up"/></svg></a></div>
     <div class="stage-frame" style="--fw:1040px"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">sprintboard.app</span></div>
       <div class="stage-mount" data-mount-for="kanban"></div></div>
     <p class="stage-note">Statisk mockup — ingen funktionalitet.</p>
@@ -348,6 +369,9 @@
     <a class="back" href="#/"><svg class="icon"><use href="#i-left"/></svg>Alla idéer</a>
     <div class="detail-head"><div class="eyebrow">Idé 02 av 08</div><h2>Skafferiet</h2>
       <p>Söklista till vänster, receptdetaljer till höger. Passar bra för att öva routing mellan lista och detaljvy, plus filtrering.</p></div>
+    <div class="api-block"><span class="eyebrow">API att använda</span>
+      <p><strong>TheMealDB</strong> — sök och hämta recept med ingredienser och instruktioner, helt utan nyckel.</p>
+      <a class="api-link" href="https://www.themealdb.com/api.php" target="_blank" rel="noopener">Öppna dokumentationen<svg class="icon"><use href="#i-up"/></svg></a></div>
     <div class="stage-frame" style="--fw:1000px"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">skafferiet.app</span></div>
       <div class="stage-mount" data-mount-for="recept"></div></div>
     <p class="stage-note">Statisk mockup — ingen funktionalitet.</p>
@@ -357,6 +381,9 @@
     <a class="back" href="#/"><svg class="icon"><use href="#i-left"/></svg>Alla idéer</a>
     <div class="detail-head"><div class="eyebrow">Idé 03 av 08</div><h2>Saldo</h2>
       <p>Nyckeltal högst upp, kategorifördelning och transaktioner under. Ger övning i formulär, summering och enkel visualisering.</p></div>
+    <div class="api-block"><span class="eyebrow">API att använda</span>
+      <p><strong>Frankfurter</strong> — hämta aktuella valutakurser, t.ex. för att räkna om utgifter i utländsk valuta.</p>
+      <a class="api-link" href="https://www.frankfurter.app/docs/" target="_blank" rel="noopener">Öppna dokumentationen<svg class="icon"><use href="#i-up"/></svg></a></div>
     <div class="stage-frame" style="--fw:900px"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">saldo.app</span></div>
       <div class="stage-mount" data-mount-for="budget"></div></div>
     <p class="stage-note">Statisk mockup — ingen funktionalitet.</p>
@@ -366,6 +393,9 @@
     <a class="back" href="#/"><svg class="icon"><use href="#i-left"/></svg>Alla idéer</a>
     <div class="detail-head"><div class="eyebrow">Idé 04 av 08</div><h2>Himlen idag</h2>
       <p>Mobilanpassad vy byggd kring ett externt väder-API. Bra tillfälle att öva loading- och felhantering vid nätverksanrop.</p></div>
+    <div class="api-block"><span class="eyebrow">API att använda</span>
+      <p><strong>Open-Meteo</strong> — hämta aktuellt väder och prognos för en sökt plats, helt utan API-nyckel.</p>
+      <a class="api-link" href="https://open-meteo.com/en/docs" target="_blank" rel="noopener">Öppna dokumentationen<svg class="icon"><use href="#i-up"/></svg></a></div>
     <div class="stage-frame" style="--fw:420px"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">himlenidag.app</span></div>
       <div class="stage-mount" data-mount-for="vader"></div></div>
     <p class="stage-note">Statisk mockup — ingen funktionalitet.</p>
@@ -375,6 +405,9 @@
     <a class="back" href="#/"><svg class="icon"><use href="#i-left"/></svg>Alla idéer</a>
     <div class="detail-head"><div class="eyebrow">Idé 05 av 08</div><h2>Butiken</h2>
       <p>Produktrutnät till vänster, varukorg till höger. Övar state som delas mellan flera komponenter och beräkningar i realtid.</p></div>
+    <div class="api-block"><span class="eyebrow">API att använda</span>
+      <p><strong>Fake Store API</strong> — hämta produkter med namn, pris och bild till katalogen.</p>
+      <a class="api-link" href="https://fakestoreapi.com/docs" target="_blank" rel="noopener">Öppna dokumentationen<svg class="icon"><use href="#i-up"/></svg></a></div>
     <div class="stage-frame" style="--fw:1040px"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">butiken.app</span></div>
       <div class="stage-mount" data-mount-for="ehandel"></div></div>
     <p class="stage-note">Statisk mockup — ingen funktionalitet.</p>
@@ -384,6 +417,9 @@
     <a class="back" href="#/"><svg class="icon"><use href="#i-left"/></svg>Alla idéer</a>
     <div class="detail-head"><div class="eyebrow">Idé 06 av 08</div><h2>Quizly</h2>
       <p>En fråga i taget med progress och poängräkning. Passar för den som vill fokusera mer på logik och state än på ett komplext gränssnitt.</p></div>
+    <div class="api-block"><span class="eyebrow">API att använda</span>
+      <p><strong>Open Trivia Database</strong> — hämta slumpade frågor och svarsalternativ.</p>
+      <a class="api-link" href="https://opentdb.com/api_config.php" target="_blank" rel="noopener">Öppna dokumentationen<svg class="icon"><use href="#i-up"/></svg></a></div>
     <div class="stage-frame" style="--fw:460px"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">quizly.app</span></div>
       <div class="stage-mount" data-mount-for="quiz"></div></div>
     <p class="stage-note">Statisk mockup — ingen funktionalitet.</p>
@@ -393,6 +429,9 @@
     <a class="back" href="#/"><svg class="icon"><use href="#i-left"/></svg>Alla idéer</a>
     <div class="detail-head"><div class="eyebrow">Idé 07 av 08</div><h2>Kvällens film</h2>
       <p>Rutnät av filmer med en utvald titel i fokus. Ger övning i att kombinera data från ett externt API med en egen sparad lista.</p></div>
+    <div class="api-block"><span class="eyebrow">API att använda</span>
+      <p><strong>TMDb</strong> (The Movie Database) — hämta filmer, affischer och betyg. Kräver kostnadsfri registrering för en API-nyckel.</p>
+      <a class="api-link" href="https://developer.themoviedb.org/docs/getting-started" target="_blank" rel="noopener">Öppna dokumentationen<svg class="icon"><use href="#i-up"/></svg></a></div>
     <div class="stage-frame" style="--fw:1040px"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">kvallensfilm.app</span></div>
       <div class="stage-mount" data-mount-for="film"></div></div>
     <p class="stage-note">Statisk mockup — ingen funktionalitet.</p>
@@ -402,6 +441,9 @@
     <a class="back" href="#/"><svg class="icon"><use href="#i-left"/></svg>Alla idéer</a>
     <div class="detail-head"><div class="eyebrow">Idé 08 av 08</div><h2>Lappen</h2>
       <p>Enkel att komma igång med, men täcker ändå CRUD, sökfiltrering och persistens — ett tryggt val om man vill hålla gränssnittet enkelt.</p></div>
+    <div class="api-block"><span class="eyebrow">API att använda</span>
+      <p><strong>ZenQuotes</strong> — hämta ett slumpat citat, t.ex. för att fylla en ny anteckning med ett förslag.</p>
+      <a class="api-link" href="https://zenquotes.io/" target="_blank" rel="noopener">Öppna dokumentationen<svg class="icon"><use href="#i-up"/></svg></a></div>
     <div class="stage-frame" style="--fw:920px"><div class="frame-bar"><i></i><i></i><i></i><span class="bar-label">lappen.app</span></div>
       <div class="stage-mount" data-mount-for="anteckningar"></div></div>
     <p class="stage-note">Statisk mockup — ingen funktionalitet.</p>
